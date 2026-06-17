@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+
+# Data files (VERY IMPORTANT)
+data/
+
+# Scrapers / experiments
+scrapesample/
+
+# Models (optional - but better NOT to push large ML files)
+*.pkl
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Environment variables
+.env

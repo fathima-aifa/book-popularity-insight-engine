@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Popularity Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="background-container">
+        
+        <button class="model-overview-btn" onclick="toggleModal(true)">Model Overview</button>
+
+        <div class="flip-container">
+            <div class="card-inner" id="predictCard">
+                
+                <div class="card-front">
+                    <h2>Book Prediction</h2>
+                    <form id="predictionForm" onsubmit="handlePredictionSubmit(event)">
+                        
+                        <div class="form-group">
+                            <label>Genre</label>
+                            <div class="genre-container">
+                                <select id="genreSelect" class="input-field">
+                                    <option value="" disabled selected>Select genres</option>
+                                    <option value="fiction">Fiction</option>
+                                    <option value="fantasy">Fantasy</option>
+                                    <option value="romance">Romance</option>
+                                    <option value="young adult">Young Adult</option>
+                                    <option value="historical fiction">Historical Fiction</option>
+                                    <option value="nonfiction">Nonfiction</option>
+                                    <option value="mystery">Mystery</option>
+                                    <option value="paranormal">Paranormal</option>
+                                    <option value="science fiction">Science Fiction</option>
+                                    <option value="thriller">Thriller</option>
+                                    <option value="horror">Horror</option>
+                                    <option value="biography">Biography</option>
+                                </select>
+                                <button type="button" class="genre-add-btn" onclick="addGenreTag()">+</button>
+                            </div>
+                            <div class="selected-tags" id="tagWrapper">
+                                </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Page Count</label>
+                            <input type="number" id="pageCount" class="input-field" placeholder="e.g., 340" min="1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Publication Year</label>
+                            <input type="number" id="pubYear" class="input-field" placeholder="e.g., 2026" min="1500" max="2100" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="description" class="input-field" placeholder="What is the author thinking about writing..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="action-btn">Predict</button>
+                    </form>
+                </div>
+
+                <div class="card-back">
+                    <h2>Analysis Strategy</h2>
+                    
+                    <div class="result-metric">
+                        <p style="font-size: 0.85rem; text-transform: uppercase; opacity: 0.8;">Predicted Popularity Score</p>
+                        <h1 id="popScore" style="font-size: 2.5rem; font-weight: 700; margin: 5px 0;">---</h1>
+                        <span id="popCategory" style="font-weight: 600; font-size: 1rem;">Calculating...</span>
+                    </div>
+
+                    <p style="text-align: left; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; text-transform: uppercase;">🤖 GenAI Recommendations:</p>
+                    <div class="strategy-box" id="aiStrategy">
+                        Consulting Machine Learning models and Generative AI engines...
+                    </div>
+
+                    <button type="button" class="action-btn back-btn" onclick="resetFlipCard()">Back to Inputs</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="overviewModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="toggleModal(false)">&times;</span>
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: #1565c0; border-bottom: 2px solid #1565c0; padding-bottom: 8px;">Model Performance Overview</h3>
+            <p style="margin-top: 12px; color: #555; font-size: 0.95rem;">Below is the calculated validation evaluation matrix compiled during model assessment training segments.</p>
+            
+            <table class="modal-table">
+                <thead>
+                    <tr>
+                        <th>Model Name</th>
+                        <th>MAE</th>
+                        <th>RMSE</th>
+                        <th>R² Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Linear Regression</td>
+                        <td>1.811719</td>
+                        <td>2.285854</td>
+                        <td>0.506638</td>
+                    </tr>
+                    <tr>
+                        <td>Random Forest</td>
+                        <td>1.674674</td>
+                        <td>2.198108</td>
+                        <td>0.543788</td>
+                    </tr>
+                    <tr style="font-weight: 700; color: #2e7d32; background: rgba(76, 175, 80, 0.1);">
+                        <td>XGBoost (Active)</td>
+                        <td>1.687179</td>
+                        <td>2.180063</td>
+                        <td>0.551248</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 15px; font-size: 0.85rem; font-style: italic; color: #777;">* XGBoost was selected for deployment due to maximizing variance explanations across metrics variants (R² = 0.5512).</p>
+        </div>
+    </div>
+
+    <script>
+        // Track unique active genre selections
+        const selectedGenresList = new Set();
+
+        // 1. Handles adding dynamic genre tags inside the input screen block
+        function addGenreTag() {
+            const selectElement = document.getElementById('genreSelect');
+            const selectedValue = selectElement.value;
+            
+            if (selectedValue && !selectedGenresList.has(selectedValue)) {
+                selectedGenresList.add(selectedValue);
+                
+                const tagWrapper = document.getElementById('tagWrapper');
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag';
+                tagElement.setAttribute('data-value', selectedValue);
+                tagElement.innerHTML = `${selectElement.options[selectElement.selectedIndex].text} <span onclick="removeGenreTag('${selectedValue}')">&times;</span>`;
+                
+                tagWrapper.appendChild(tagElement);
+            }
+            selectElement.value = ""; // Reset dropdown view back to placeholder
+        }
+
+        // 2. Clear out subgenre selections tags when 'x' is clicked
+        function removeGenreTag(val) {
+            selectedGenresList.delete(val);
+            const tagToRemove = document.querySelector(`.tag[data-value="${val}"]`);
+            if(tagToRemove) tagToRemove.remove();
+        }
+
+        // 3. Controller to turn Model Performance Metrics Matrix pop-up views on or off
+        function toggleModal(show) {
+            const modal = document.getElementById('overviewModal');
+            if(show) modal.classList.add('active');
+            else modal.classList.remove('active');
+        }
+
+        // 4. Reset the interface card structure and flip it back around to inputs safely
+        function resetFlipCard() {
+            document.getElementById('predictCard').classList.remove('is-flipped');
+        }
+
+        // 5. Connect inputs to your Flask API backend routes asynchronously
+        function handlePredictionSubmit(event) {
+            event.preventDefault(); // Halt default page reloads
+            
+            // Collect variables from input fields
+            const pageCount = document.getElementById('pageCount').value;
+            const pubYear = document.getElementById('pubYear').value;
+            const description = document.getElementById('description').value;
+            const genresArray = Array.from(selectedGenresList);
+
+            // Validation check: Make sure at least one genre tag is selected
+            if (genresArray.length === 0) {
+                alert("Please pick at least one genre and hit the '+' button before running analysis!");
+                return;
+            }
+
+            // Instantly flip the card to show a loading screen state on the back side
+            document.getElementById('predictCard').classList.add('is-flipped');
+            document.getElementById('popScore').innerText = "---";
+            document.getElementById('popCategory').innerText = "Running Pipelines...";
+            document.getElementById('aiStrategy').innerText = "Consulting Machine Learning models and Generative AI engines...";
+
+            // POST the data securely as JSON to your Flask route
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    genres: genresArray,
+                    page_count: pageCount,
+                    pub_year: pubYear,
+                    description: description
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    // Populate backend response parameters on the card back
+                    document.getElementById('popScore').innerText = data.score;
+                    document.getElementById('popCategory').innerText = data.category;
+                    // Preserves formatting and line breaks returned from OpenAI's markdown response safely
+                    document.getElementById('aiStrategy').innerHTML = data.strategies.replace(/\n/g, '<br>');
+                } else {
+                    alert("Pipeline Error: " + data.error);
+                    resetFlipCard();
+                }
+            })
+            .catch(err => {
+                alert("System connection failure: " + err);
+                resetFlipCard();
+            });
+        }
+    </script>
+</body>
+</html>
