@@ -1,6 +1,6 @@
 # 📚 Book Popularity Insight Engine
 
-## Project Overview
+### Project Overview
 
 The **Book Popularity Insight Engine** is a Machine Learning and Generative AI-based web application that predicts the **popularity of books** using structured metadata and unstructured text descriptions.
 
@@ -8,9 +8,21 @@ The system uses a trained **XGBoost Regressor model** along with **TF-IDF text v
 
 In addition to prediction, the project integrates **Google Gemini (GenAI)** to generate intelligent recommendations for improving book reach, engagement, and marketing strategy.
 
----
+## 📊 Dataset Information
 
-##  Key Features
+The dataset used in this project was collected using web scraping techniques with Python (`data_scrape.py`) from online book information sources.
+
+After collection, the data was cleaned, processed, and transformed for machine learning use.
+
+### 📌 Final Dataset Includes:
+- Book title  
+- Genre (multi-label)  
+- Page count  
+- Publication year  
+- Book description (text data)  
+- Ratings / popularity score (target variable)
+
+###  Key Features
 
 -  Predict book popularity using Machine Learning
 -  Feature engineering with **TF-IDF text processing**
@@ -19,9 +31,9 @@ In addition to prediction, the project integrates **Google Gemini (GenAI)** to g
 -  Flask-based interactive web application
 -  Model comparison (Linear Regression, Random Forest, XGBoost)
 
----
 
-##  Project Structure
+
+###  Project Structure
 
 The project is organized as follows:
 
@@ -51,6 +63,6 @@ The project is organized as follows:
 
 
 
-## 📌 Note
+###  Note
 
 This project combines Machine Learning, Natural Language Processing, and Generative AI to build an end-to-end intelligent book analytics system.
