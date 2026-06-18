@@ -21,8 +21,7 @@ The dataset was collected using web scraping with Python (`data_scrape.py`) from
 -  AI-powered marketing and engagement suggestions (Gemini API)
 -  Flask-based interactive web application
 -  Model comparison (Linear Regression, Random Forest, XGBoost)
-
-
+---
 
 ###  Project Structure
 
@@ -52,7 +51,7 @@ The project is organized as follows:
 **README.md**
 - Project documentation
 
-
+---
 
 ###  Note
 
