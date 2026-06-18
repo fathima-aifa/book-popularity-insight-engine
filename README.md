@@ -47,3 +47,10 @@ book-popularity-insight-engine/
 ├── data_scrape.py → Script used for web scraping book dataset
 ├── .gitignore → Files excluded from Git tracking
 ├── README.md → Project documentation
+
+---
+
+
+## 📌 Note
+
+This project combines Machine Learning, Natural Language Processing, and Generative AI to build an end-to-end intelligent book analytics system.
