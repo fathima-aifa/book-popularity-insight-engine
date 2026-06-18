@@ -23,32 +23,32 @@ In addition to prediction, the project integrates **Google Gemini (GenAI)** to g
 
 ##  Project Structure
 
-```text
-book-popularity-insight-engine/
-│
-├── app/
-│   ├── app.py
-│   │   Main Flask backend that handles prediction and GenAI responses
-│   ├── templates/
-│   │   index.html → Frontend UI for user interaction
-│   ├── static/
-│   │   CSS and image assets for UI styling
-│
-├── models/
-│   ├── xgboost_model.pkl → Final trained ML model
-│   ├── tfidf_vectorizer.pkl → Text vectorizer for book descriptions
-│   ├── feature_columns.pkl → Feature alignment for prediction
-│
-├── notebook/
-│   ├── 01_eda.ipynb → Exploratory Data Analysis
-│   ├── 02_preprocessing.ipynb → Data cleaning & feature engineering
-│   ├── model_development.ipynb → Model training & evaluation
-│
-├── data_scrape.py → Script used for web scraping book dataset
-├── .gitignore → Files excluded from Git tracking
-├── README.md → Project documentation
+The project is organized as follows:
 
----
+**app/**
+- app.py → Main Flask backend handling ML prediction and GenAI responses  
+- templates/index.html → Frontend UI for user interaction  
+- static/ → CSS and image assets for UI styling  
+
+**models/**
+- xgboost_model.pkl → Final trained ML model  
+- tfidf_vectorizer.pkl → Text vectorizer for book descriptions  
+- feature_columns.pkl → Feature alignment used during prediction  
+
+**notebook/**
+- 01_eda.ipynb → Exploratory Data Analysis  
+- 02_preprocessing.ipynb → Data cleaning and feature engineering  
+- model_development.ipynb → Model training and evaluation  
+
+**data_scrape.py**
+- Script used for web scraping and dataset collection  
+
+**.gitignore**
+- Specifies files and folders excluded from Git tracking  
+
+**README.md**
+- Project documentation
+
 
 
 ## 📌 Note
