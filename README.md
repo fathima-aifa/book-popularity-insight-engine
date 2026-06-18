@@ -8,19 +8,10 @@ The system uses a trained **XGBoost Regressor model** along with **TF-IDF text v
 
 In addition to prediction, the project integrates **Google Gemini (GenAI)** to generate intelligent recommendations for improving book reach, engagement, and marketing strategy.
 
-## 📊 Dataset Information
+###  Dataset Information
 
-The dataset used in this project was collected using web scraping techniques with Python (`data_scrape.py`) from online book information sources.
+The dataset was collected using web scraping with Python (`data_scrape.py`) from online book sources and then cleaned and prepared for machine learning.
 
-After collection, the data was cleaned, processed, and transformed for machine learning use.
-
-### 📌 Final Dataset Includes:
-- Book title  
-- Genre (multi-label)  
-- Page count  
-- Publication year  
-- Book description (text data)  
-- Ratings / popularity score (target variable)
 
 ###  Key Features
 
