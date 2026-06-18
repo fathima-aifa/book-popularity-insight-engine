@@ -11,8 +11,6 @@ data/
 # Scrapers / experiments
 scrapesample/
 
-# Models (optional - but better NOT to push large ML files)
-*.pkl
 
 # Jupyter checkpoints
 .ipynb_checkpoints/
