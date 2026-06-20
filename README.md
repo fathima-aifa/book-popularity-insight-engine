@@ -51,6 +51,9 @@ The project is organized as follows:
 **README.md**
 - Project documentation
 
+**requirements.txt**
+- Project dependencies
+  
 ---
 
 ###  Note
